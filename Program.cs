@@ -101,10 +101,85 @@ public class SinglyLinkedList
         return count;
     }
 }
+public class Node2
+{
+    public object element;
+    public Node2 flink, blink;
+    public Node2()
+    {
+        element = null;
+        flink = blink = null;
+    }
+    public Node2(object element)
+    {
+        this.element = element;
+        flink = blink = null;
+    }
+}
+public class DoubleLinkedList
+{
+    public Node2 header;
+    public DoubleLinkedList()
+    {
+        header = new Node2("Header");
+    }
+    private Node2 Find(object element)
+    {
+        Node2 current = new Node2();
+        current = header;
+        while (current.element != element)
+        {
+            current = current.flink;
+        }
+        return current;
+    }
+    public void Insert(object newelement, object afterelement)
+    {
+        Node2 current = new Node2();
+        Node2 newnode = new Node2(newelement);
+        current = Find(afterelement);
+        if(current.flink!=null)
+            current.flink.blink = newnode;
+        newnode.flink = current.flink;
+        current.flink = newnode;
+        newnode.blink = current;
+    }
+    public void Remove(object element)
+    {
+        Node2 current = Find(element);
+        if (current.flink != null)
+        {
+            current.blink.flink = current.flink;
+            current.flink.blink = current.blink;
+            current.flink = null;
+            current.blink = null;
+        }
+    }
+    private Node2 FindLast()
+    {
+        Node2 current = new Node2();
+        current = header;
+        while (!(current.flink == null))
+            current = current.flink;
+        return current;
+    }
+    public void Print()
+    {
+        Node2 current = new Node2();
+        current = FindLast();
+        while (!(current.blink == null))
+        {
+            Console.WriteLine(current.element);
+            current = current.blink;
+        }
+    }
+}
+
 public class Program
 {
     public static void Main(string[] args)
     {
+        /*
         SinglyLinkedList sll = new SinglyLinkedList();
         sll.Insert("18", "Header");
         sll.Insert("15", "18");
@@ -123,5 +198,15 @@ public class Program
         sll.Print();
         //Console.WriteLine($"Tổng các node: {sll.Sum()}");
         //Console.WriteLine($"Số node: {sll.Count()}");
+        */
+
+        DoubleLinkedList dll = new DoubleLinkedList();
+        dll.Insert("11", "Header");
+        dll.Insert("34", "11");
+        dll.Insert("23", "11");
+        dll.Print();
+        //System.Console.WriteLine("---");
+        //dll.Remove("11");
+        //dll.Print();
     }
 }
