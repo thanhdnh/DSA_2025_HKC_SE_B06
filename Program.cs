@@ -35,6 +35,26 @@ public class SinglyLinkedList
         newnode.link = current.link;
         current.link = newnode;
     }
+    public void AddAfter(object newdata, object afterdata)
+    {
+        Insert(newdata, afterdata);
+    }
+    public void AddBefore(object newdata, object afterdata)
+    {
+        object prevdata = FindPrevNode(afterdata).data;
+        Insert(newdata, prevdata);
+    }
+    public void AddFirst(object newdata)
+    {
+        Insert(newdata, "Header");
+    }
+    public void AddLast(object newdata)
+    {
+        Node current = header;
+        while (current.link != null)
+            current = current.link;
+        Insert(newdata, current.data);
+    }
     public Node FindPrevNode(object finddata)
     {
         Node current = header;
@@ -68,6 +88,18 @@ public class SinglyLinkedList
         }
         return S;
     }
+    public int Count()
+    {
+        if (header.link == null) return 0;
+        Node current = header.link;
+        int count = 0;
+        while (current != null)
+        {
+            count++;
+            current = current.link;
+        }
+        return count;
+    }
 }
 public class Program
 {
@@ -80,7 +112,16 @@ public class Program
         sll.Print();
         //sll.Remove("15");
         Console.WriteLine("---");
-        //sll.Print();
-        Console.WriteLine($"Tổng các node: {sll.Sum()}");
+        sll.AddBefore("99", "15");
+        Console.WriteLine("---");
+        sll.Print();
+        sll.AddFirst("100");
+        Console.WriteLine("---");
+        sll.Print();
+        sll.AddLast("33");
+        Console.WriteLine("---");
+        sll.Print();
+        //Console.WriteLine($"Tổng các node: {sll.Sum()}");
+        //Console.WriteLine($"Số node: {sll.Count()}");
     }
 }
